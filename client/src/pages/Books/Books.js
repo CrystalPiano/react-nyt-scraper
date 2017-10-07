@@ -13,11 +13,16 @@ class Books extends Component {
     books: [],
     title: "",
     url: "",
+    results: [],
   };
 
 // Life Cycle from REACT
   componentDidMount() {
     this.loadBooks();
+    helpers.runQuery('lego', '2016', '2018')
+    .then((data) => {
+      this.setState({ results: data.docs})
+    });
   }
 
 // Events
@@ -71,13 +76,13 @@ class Books extends Component {
                 placeholder="Title (required)"
               />
               <Input
-                value={this.state.author}
+                value={this.state.url}
                 onChange={this.handleInputChange}
                 name="url"
-                placeholder="Author (required)"
+                placeholder="URL (required)"
               />
               <FormBtn
-                disabled={!(this.state.author && this.state.title)}
+                disabled={!(this.state.url && this.state.title)}
                 onClick={this.handleFormSubmit}
               >
                 Submit Book
