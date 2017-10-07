@@ -11,18 +11,19 @@ class Books extends Component {
   state = {
     books: [],
     title: "",
-    author: "",
-    synopsis: ""
+    url: "",
   };
 
+// Life Cycle from REACT
   componentDidMount() {
     this.loadBooks();
   }
 
+// Events
   loadBooks = () => {
     API.getBooks()
       .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "" })
+        this.setState({ books: res.data, title: "", url: ""})
       )
       .catch(err => console.log(err));
   };
@@ -42,24 +43,24 @@ class Books extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    if (this.state.title && this.state.author) {
+    if (this.state.title) {
       API.saveBook({
         title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.synopsis
+        url: this.state.url,
       })
         .then(res => this.loadBooks())
         .catch(err => console.log(err));
     }
   };
 
+// Life Cycle from REACT
   render() {
     return (
       <Container fluid>
         <Row>
           <Col size="md-6">
             <Jumbotron>
-              <h1>What Books Should I Read?</h1>
+              <h1>What NYT Articles Should I Search?</h1>
             </Jumbotron>
             <form>
               <Input
@@ -71,14 +72,8 @@ class Books extends Component {
               <Input
                 value={this.state.author}
                 onChange={this.handleInputChange}
-                name="author"
+                name="url"
                 placeholder="Author (required)"
-              />
-              <TextArea
-                value={this.state.synopsis}
-                onChange={this.handleInputChange}
-                name="synopsis"
-                placeholder="Synopsis (Optional)"
               />
               <FormBtn
                 disabled={!(this.state.author && this.state.title)}
@@ -90,7 +85,7 @@ class Books extends Component {
           </Col>
           <Col size="md-6">
             <Jumbotron>
-              <h1>Books On My List</h1>
+              <h1>Articles On My List</h1>
             </Jumbotron>
             {this.state.books.length ? (
               <List>
