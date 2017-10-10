@@ -7,7 +7,7 @@ const helpers = {
 
         let formattedTerm = term.trim();
         let formattedStart = start.trim() + '0101';
-        let formattedEnd  =start.trim() + '1231';
+        let formattedEnd  =end.trim() + '1231';
 
         return axios.get('https://api.nytimes.com/svc/search/v2/articlesearch.json', {
             params: {

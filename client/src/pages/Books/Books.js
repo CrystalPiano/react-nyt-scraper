@@ -8,6 +8,7 @@ import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
 import helpers from '../../utils/helpers';
 
+// STATE
 class Books extends Component {
   state = {
     books: [],
@@ -68,6 +69,9 @@ class Books extends Component {
             <Jumbotron>
               <h1>What NYT Articles Should I Search?</h1>
             </Jumbotron>
+            {this.state.results.map(result => (
+              <p>{result.web_url}</p>
+            ))}
             <form>
               <Input
                 value={this.state.title}
@@ -99,7 +103,7 @@ class Books extends Component {
                   <ListItem key={book._id}>
                     <Link to={"/books/" + book._id}>
                       <strong>
-                        {book.title} by {book.author}
+                        {book.title} by {book.url}
                       </strong>
                     </Link>
                     <DeleteBtn onClick={() => this.deleteBook(book._id)} />
